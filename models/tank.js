@@ -41,6 +41,7 @@ var tankModel = {
         game.physics.enable(newTank);
         game.physics.arcade.enable(newTank, Phaser.Physics.ARCADE);
         newTank.anchor.setTo(0.5, 0.5);
+        newTank.scale.setTo(0.75, 0.75);
         newTank.can_shoot = true;
 
 
