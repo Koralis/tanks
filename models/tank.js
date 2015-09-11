@@ -83,5 +83,14 @@ var tankModel = {
 
     killTankSession: function(session) {
         firebase.child('sessions/' + session + '/killed').set(true);
+    },
+
+    storeProjectail: function(p) {
+        console.log(p);
+    },
+
+    killProjectail: function(p) {
+
     }
+
 };
