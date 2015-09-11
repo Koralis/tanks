@@ -24,7 +24,8 @@ var Game = {
         //removed lost sessions
         for (var oldSession in tanksSessions) {
             if (!sessions.hasOwnProperty(oldSession)) {
-                tanksSessions[oldSession].kill();
+                tanksSessions[oldSession] = null;
+                delete tanksSessions[oldSession];
             }
         }
 
