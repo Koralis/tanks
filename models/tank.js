@@ -12,6 +12,7 @@ var tankModel = {
 
     createTank: function(session, params) {
         var newTank = tanks.create(game.world.centerX, game.world.centerY - 150, 'tank', 2);
+        newTank.session = session;
         game.physics.arcade.enable([newTank], Phaser.Physics.ARCADE);
 
         newTank.anchor.setTo(0.5, 0.5);
@@ -25,12 +26,35 @@ var tankModel = {
 
         tanksSessions[session] = newTank;
 
-        this.setTankData(tanksSessions[session], params);
+        return this.setTankData(tanksSessions[session], params);
     },
 
-    setTankData: function(tank, params) {
-        tank.x = params.x;
-        tank.y = params.y;
-        tank.angle = params.angle;
+    setTankData: function(newTank, params) {
+        if (params) {
+            newTank.x = params.x;
+            newTank.y = params.y;
+            newTank.angle = params.angle;
+        }
+        //generate random location
+        else {
+            var positioned = false;
+            do {
+                var x = Math.floor((Math.random() * map.width));
+                var y = Math.floor((Math.random() * map.height));
+                if (!map.hasTile(x, y, layer)) {
+                    newTank.x = x * map.tileWidth + (map.tileWidth / 2);
+                    newTank.y = y * map.tileHeight + (map.tileHeight / 2);
+                    positioned = true;
+                }
+            }
+            while(!positioned);
+        }
+
+
+        return newTank;
+    },
+
+    killTankSession: function(session) {
+        firebase.child('sessions/' + session).remove();
     }
 };

@@ -41,10 +41,8 @@ function initApp() {
 //            layer.resizeWorld();
         map.setTileIndexCallback(16, function(){console.log('fsda')})
 
-        tank = tanks.create(game.world.centerX, game.world.centerY, 'tank', 2);
-        tank2 = tanks.create(game.world.centerX, game.world.centerY - 150, 'tank', 2);
-        tank.anchor.setTo(0.5, 0.5);
-        tank.can_shoot = true;
+        tank = tankModel.createTank(sessionId, null);
+        tankModel.sendData();
 
         game.physics.arcade.enable(tanks, Phaser.Physics.ARCADE);
         tanks.collideWorldBounds = true;
@@ -52,10 +50,6 @@ function initApp() {
         tanks.physicsBodyType = Phaser.Physics.ARCADE;
 
 
-        //tank2.body.enable = true;
-        //tank2.physicsBodyType = Phaser.Physics.ARCADE;
-        //tank2.body.collideWorldBounds = true;
-        //tank2.body.bounce.y = 0.95;
 
         upKey = game.input.keyboard.addKey(Phaser.Keyboard.UP);
         downKey = game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
@@ -145,6 +139,7 @@ function initApp() {
     function killTank(projectile, tank) {
         projectile.kill();
         tank.kill();
+        tankModel.killTankSession(tank.session);
     }
 
     var shootTimeout = function () {
