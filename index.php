@@ -14,17 +14,19 @@
         body {
             background: #000;
             position: relative;
+            text-align: center;
         }
         #gameWrapper {
             width: 1024px;
             height: 768px;
             margin: 0 auto;
-            border: 5px solid #fff;
         }
     </style>
 </head>
 <body>
-<br />
+    <br>
+    <img src="images/logo.png" />
+    <br><br>
     <div id="gameWrapper"></div>
     <script type="text/javascript">
 
