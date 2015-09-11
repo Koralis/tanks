@@ -1,14 +1,12 @@
-var world = {
-        height: 2000,
-        width: 1366
-    },
-    player1,
-    cursors,
-    last;
+function initApp() {
+    var upKey;
+    var downKey;
+    var leftKey;
+    var rightKey;
+    var spaceKey;
+    var projectails;
 
-window.onload = function () {
-
-    var game = new Phaser.Game(1366, 768, Phaser.AUTO, '', {
+    game = new Phaser.Game(800, 600, Phaser.AUTO, '', {
         preload: preload,
         create: create,
         update: update,
@@ -17,52 +15,121 @@ window.onload = function () {
 
     function preload() {
 
+//            game.load.image('logo', 'images/logo.png');
+        game.load.image('tank', 'images/tank.png')
+        game.load.image('projectail', 'images/projectile.gif')
         game.stage.backgroundColor = '#EEEEEE';
-
-        game.load.image('tank', 'images/tank1.png');
 
     }
 
     function create() {
-        game.world.setBounds(0, 0, world.width, world.height);
+        game.physics.startSystem(Phaser.Physics.ARCADE);
 
-        player1 = game.add.sprite(0, 0, 'tank');
-        //player1.scale.setTo(0.5, 0.5);
+        projectails = game.add.group();
 
-        //player1.fixedToCamera = true;
-        player1.cameraOffset.setTo(world.width / 2 - (player1.width / 2), 50);
+        tank = game.add.sprite(game.world.centerX, game.world.centerY, 'tank', 2);
+        tank2 = game.add.sprite(game.world.centerX, game.world.centerY - 150, 'tank', 2);
+        tank.anchor.setTo(0.5, 0.5);
+        tank.can_shoot = true;
 
-        //game.add.tween(player1.cameraOffset).to( { y: 400 }, 2000, Phaser.Easing.Back.InOut, true, 0, 2000, true);
+        game.physics.arcade.enable([tank, tank2], Phaser.Physics.ARCADE);
+        tank.body.collideWorldBounds = true;
+        tank.body.enable = true;
+        tank.physicsBodyType = Phaser.Physics.ARCADE;
 
-        cursors = game.input.keyboard.createCursorKeys();
+
+        tank2.body.enable = true;
+        tank2.physicsBodyType = Phaser.Physics.ARCADE;
+        tank2.body.collideWorldBounds = true;
+        tank2.body.bounce.y = 0.95;
+
+        upKey = game.input.keyboard.addKey(Phaser.Keyboard.UP);
+        downKey = game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
+        leftKey = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
+        rightKey = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
+        spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+
+//            game.camera.follow(tank);
+
     }
 
     function update() {
-        if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
-            player1.x -= 4;
-            player1.x = Math.max(0, player1.x);
-            player1.angle = 270;
-        }
-        else if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) {
-            player1.x += 4;
-            player1.x = Math.min(world.width - player1.width, player1.x);
-            player1.angle = 90;
-        }
-        else if (game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
-            player1.y -= 4;
-            player1.y = Math.max(0, player1.y);
-            player1.angle = 0;
-        }
-        else if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN)) {
-            player1.y += 4;
-            player1.y = Math.min(world.height - player1.height, player1.y);
-            player1.angle = 180;
+
+        game.physics.arcade.collide(tank, tank2);
+
+
+        game.physics.arcade.overlap(projectails, tank2, killTank);
+        tank.speed = 0;
+
+        if (spaceKey.isDown) {
+            shoot(tank);
+            tankModel.sendData();
         }
 
+        if (upKey.isDown) {
+            tank.angle = 270;
+            tank.speed = 50;
+        }
+        else if (downKey.isDown) {
+            tank.angle = 90;
+            tank.speed = 50;
+        }
+
+        else if (leftKey.isDown) {
+            tank.angle = 180;
+            tank.speed = 50;
+        }
+        else if (rightKey.isDown) {
+            tank.angle = 0;
+            tank.speed = 50;
+        }
+
+        game.physics.arcade.velocityFromRotation(tank.rotation, tank.speed, tank.body.velocity);
+        projectails.forEach(moveProcjtails, this);
+
+        //update DB
+        if (tank.speed) {
+            tankModel.sendData();
+        }
     }
 
     function render() {
-        game.debug.spriteInfo(player1, 20, 32);
+
+
     }
 
-};
+    function shoot(tank) {
+        if (tank.can_shoot) {
+            var projectail = projectails.create(tank.x, tank.y, 'projectail');
+            projectail.speed = 200;
+            projectail.angle = tank.angle;
+            game.physics.arcade.enable(projectail, Phaser.Physics.ARCADE);
+
+            projectail.body.collideWorldBounds = true;
+            projectail.body.enable = true;
+            projectail.physicsBodyType = Phaser.Physics.ARCADE;
+
+            tank.can_shoot = false;
+
+
+            shootTimeout();
+        }
+
+    }
+
+    function moveProcjtails(projectail) {
+        game.physics.arcade.velocityFromRotation(projectail.rotation, projectail.speed, projectail.body.velocity);
+    }
+
+    function killTank(projectile, tank) {
+        projectile.kill();
+        tank.kill();
+    }
+
+    var shootTimeout = function () {
+
+        setTimeout(function () {
+            tank.can_shoot = true;
+        }, 100);
+    }
+}
