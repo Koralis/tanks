@@ -17,7 +17,11 @@ var Game = {
                     }
                 }
                 else {
-                    tankKilled = false;
+                    if (!sessions[session].killed)
+                        tankKilled = false;
+                    else {
+
+                    }
                 }
             }
         }

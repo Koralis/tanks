@@ -8,7 +8,8 @@ var tankModel = {
             "x": tank.x,
             "y": tank.y,
             "angle": tank.angle,
-            time: timestamp.getTime() / 1000
+            time: timestamp.getTime() / 1000,
+            killed: killed
         });
     },
 
