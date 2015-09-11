@@ -63,7 +63,7 @@ function initApp() {
 
     function update() {
 
-        if (!tank)
+        if (killed)
             return false;
 
         game.physics.arcade.collide(tank, tanks);

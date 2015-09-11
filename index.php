@@ -18,7 +18,8 @@
         game,
         tank,
         tanksSessions = {},
-        tanks;
+        tanks,
+        killed = false;
 
     window.onload = function() {
         initApp();
