@@ -35,6 +35,27 @@ var tankModel = {
         return this.setTankData(tanksSessions[session], params);
     },
 
+    createMyTank: function(session, params) {
+        var newTank = tanksMe.create(game.world.centerX, game.world.centerY - 150, 'tank', 2);
+        newTank.session = session;
+        game.physics.enable(newTank);
+        game.physics.arcade.enable(newTank, Phaser.Physics.ARCADE);
+        newTank.anchor.setTo(0.5, 0.5);
+        newTank.can_shoot = true;
+
+
+        newTank.body.enable = true;
+        newTank.physicsBodyType = Phaser.Physics.ARCADE;
+        newTank.body.collideWorldBounds = true;
+        newTank.body.bounce.y = 0.95;
+        newTank.body.linearDamping = 1;
+        game.camera.follow(newTank);
+
+        tanksSessions[session] = newTank;
+
+        return this.setTankData(tanksSessions[session], params);
+    },
+
     setTankData: function(newTank, params) {
         if (!newTank)
             return false;

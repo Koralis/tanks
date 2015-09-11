@@ -42,6 +42,7 @@ function initApp() {
         projectails.outOfBoundsKill = true;
 
         tanks = game.add.group();
+        tanksMe =game.add.group();
 
         map = game.add.tilemap('map', 64, 64);
         map.addTilesetImage('tiles');
@@ -52,7 +53,7 @@ function initApp() {
         layer = map.createLayer(0);
         layer.resizeWorld();
 
-        tank = tankModel.createTank(sessionId, null);
+        tank = tankModel.createMyTank(sessionId, null);
         tankModel.sendData();
 
         upKey = game.input.keyboard.addKey(Phaser.Keyboard.UP);
@@ -73,6 +74,7 @@ function initApp() {
         // Collides
         game.physics.arcade.collide(tank, tanks);
         game.physics.arcade.collide(tanks, layer);
+        game.physics.arcade.collide(tanksMe, layer);
         game.physics.arcade.collide(projectails, layer, destroyWall);
         game.physics.arcade.collide(projectails, game.world, destroyWall);
         //
