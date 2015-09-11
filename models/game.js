@@ -7,7 +7,7 @@ var Game = {
         for (var session in sessions) {
             if (sessions.hasOwnProperty(session)) {
                 if (session != sessionId) {
-                    if (!sessions[session].killed) {
+                    if (!sessions[session].killed && sessions[session].time > expired) {
                         //create tank
                         if (typeof tanksSessions[session] == "undefined" || !tanksSessions[session]) {
                             tankModel.createTank(session, sessions[session]);

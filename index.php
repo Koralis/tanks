@@ -26,7 +26,7 @@
     <div id="gameWrapper"></div>
     <script type="text/javascript">
 
-    var firebase = new Firebase("https://koralis-tanks.firebaseio.com/"),
+    var firebase = new Firebase("https://koralis-tanks2.firebaseio.com/"),
         sessionId = Session.getId(),
         userSession = firebase.child('sessions/' + sessionId),
         sessionData,
@@ -45,6 +45,7 @@
                 Game.updateView(sessionData);
             });
         };
+        console.log(sessionId);
 
     </script>
 </body>
