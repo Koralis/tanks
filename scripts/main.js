@@ -13,12 +13,65 @@ function initApp() {
         render: render
     });
 
+    var audioJSON = {
+        spritemap: {
+            'alien death': {
+                start: 1,
+                end: 2,
+                loop: false
+            },
+            'boss hit': {
+                start: 3,
+                end: 3.5,
+                loop: false
+            },
+            'escape': {
+                start: 4,
+                end: 7.2,
+                loop: false
+            },
+            'meow': {
+                start: 8,
+                end: 8.5,
+                loop: false
+            },
+            'numkey': {
+                start: 9,
+                end: 9.1,
+                loop: false
+            },
+            'ping': {
+                start: 10,
+                end: 11,
+                loop: false
+            },
+            'death': {
+                start: 12,
+                end: 16.2,
+                loop: false
+            },
+            'shot': {
+                start: 17,
+                end: 18,
+                loop: false
+            },
+            'squit': {
+                start: 19,
+                end: 19.3,
+                loop: false
+            }
+        }
+    };
+
+    var fx;
+
     function preload() {
 
 //            game.load.image('logo', 'images/logo.png');
-        game.load.image('tank', 'images/tank.png')
-        game.load.image('projectail', 'images/projectile.gif')
-        game.stage.backgroundColor = '#EEEEEE';
+        game.load.image('tank', 'images/tank.png');
+        game.load.image('projectail', 'images/projectile.gif');
+        game.load.audiosprite('sfx', 'images/fx_mixdown.ogg', null, audioJSON);
+        game.stage.backgroundColor = '#000';
 
 
         game.load.tilemap('map', 'map.csv', null, Phaser.Tilemap.CSV);
@@ -27,6 +80,11 @@ function initApp() {
     }
 
     function create() {
+
+        fx = game.add.audioSprite('sfx');
+        console.debug(fx);
+        fx.allowMultiple = true;
+
         game.physics.startSystem(Phaser.Physics.ARCADE);
         game.physics.startSystem(Phaser.Physics.P2JS);
 
@@ -111,6 +169,7 @@ function initApp() {
 
     function shoot(tank) {
         if (tank && tank.can_shoot) {
+            fx.play('shot');
             var positions = [];
             positions [0] = [100, 0];
             positions [90] = [0, -100];
