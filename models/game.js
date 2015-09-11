@@ -30,8 +30,10 @@ var Game = {
         }
 
         if (killed) {
-            tank.kill();
-            tank = null;
+            if (tank) {
+                tank.kill();
+                tank = null;
+            }
         }
     }
 };
