@@ -6,7 +6,7 @@ function initApp() {
     var spaceKey;
     var projectails;
 
-    game = new Phaser.Game(800, 600, Phaser.AUTO, '', {
+    game = new Phaser.Game(1024, 768, Phaser.AUTO, '', {
         preload: preload,
         create: create,
         update: update,
@@ -20,12 +20,24 @@ function initApp() {
         game.load.image('projectail', 'images/projectile.gif')
         game.stage.backgroundColor = '#EEEEEE';
 
+
+        game.load.tilemap('map', 'map.csv', null, Phaser.Tilemap.CSV);
+        game.load.image('tiles', 'images/sprite.png');
+
     }
 
     function create() {
         game.physics.startSystem(Phaser.Physics.ARCADE);
+        game.physics.startSystem(Phaser.Physics.P2JS);
 
         projectails = game.add.group();
+        projectails.outOfBoundsKill = true;
+
+        map = game.add.tilemap('map', 64, 64);
+        map.addTilesetImage('tiles');
+        layer = map.createLayer(0);
+//            layer.resizeWorld();
+        map.setTileIndexCallback(16, function(){console.log('fsda')})
 
         tank = game.add.sprite(game.world.centerX, game.world.centerY, 'tank', 2);
         tank2 = game.add.sprite(game.world.centerX, game.world.centerY - 150, 'tank', 2);
