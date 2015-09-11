@@ -1,5 +1,7 @@
 var tankModel = {
     sendData: function () {
+        if (!tank)
+            return false;
         var timestamp = new Date();
 
         userSession.set({

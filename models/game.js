@@ -31,6 +31,7 @@ var Game = {
 
         if (killed) {
             tank.kill();
+            tank = null;
         }
     }
 };
