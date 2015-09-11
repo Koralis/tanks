@@ -26,15 +26,15 @@
     <div id="gameWrapper"></div>
     <script type="text/javascript">
 
-        var firebase = new Firebase("https://koralis-tanks2.firebaseio.com/"),
-            sessionId = Session.getId(),
-            userSession = firebase.child('sessions/' + sessionId),
-            sessionData,
-            game,
-            tank,
-            tanksSessions = {},
-            tanks,
-            killed = false;
+    var firebase = new Firebase("https://koralis-tanks.firebaseio.com/"),
+        sessionId = Session.getId(),
+        userSession = firebase.child('sessions/' + sessionId),
+        sessionData,
+        game,
+        tank,
+        tanksSessions = {},
+        tanks,
+        killed = false;
 
         window.onload = function () {
             initApp();

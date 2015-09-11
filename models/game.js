@@ -9,7 +9,7 @@ var Game = {
                 if (session != sessionId) {
                     if (!sessions[session].killed) {
                         //create tank
-                        if (typeof tanksSessions[session] == "undefined") {
+                        if (typeof tanksSessions[session] == "undefined" || !tanksSessions[session]) {
                             tankModel.createTank(session, sessions[session]);
                         }
                         //update tank data
