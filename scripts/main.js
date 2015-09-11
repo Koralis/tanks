@@ -215,17 +215,12 @@ function initApp() {
 
     function destroyWall (projectile, layer) {
         projectile.kill();
-        //removeTile(layer);
+        removeTile(layer);
         
-        console.log(layer);
+        //console.log(layer);
     }
 
     function removeTile(tile){
-        tile.destroy();
-        ////tile.collideDown = false;
-        ////tile.collideUp = false;
-        ////tile.collideRight = false;
-        ////tile.collideLeft = false;
-        //layer.dirty = true;
+        map.removeTile(tile.x, tile.y);
     };
 }
