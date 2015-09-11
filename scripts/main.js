@@ -198,6 +198,7 @@ function initApp() {
     }
 
     function killTank(projectile, tank) {
+        fx.play('death');
         projectile.kill();
         tank.kill();
         tankModel.killTankSession(tank.session);
