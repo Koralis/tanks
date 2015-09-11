@@ -5,6 +5,7 @@ function initApp() {
     var rightKey;
     var spaceKey;
     var projectails;
+    var tanks;
 
     game = new Phaser.Game(1024, 768, Phaser.AUTO, '', {
         preload: preload,
@@ -33,27 +34,29 @@ function initApp() {
         projectails = game.add.group();
         projectails.outOfBoundsKill = true;
 
+        tanks = game.add.group();
+
         map = game.add.tilemap('map', 64, 64);
         map.addTilesetImage('tiles');
         layer = map.createLayer(0);
 //            layer.resizeWorld();
         map.setTileIndexCallback(16, function(){console.log('fsda')})
 
-        tank = game.add.sprite(game.world.centerX, game.world.centerY, 'tank', 2);
-        tank2 = game.add.sprite(game.world.centerX, game.world.centerY - 150, 'tank', 2);
+        tank = tanks.create(game.world.centerX, game.world.centerY, 'tank', 2);
+        tank2 = tanks.create(game.world.centerX, game.world.centerY - 150, 'tank', 2);
         tank.anchor.setTo(0.5, 0.5);
         tank.can_shoot = true;
 
-        game.physics.arcade.enable([tank, tank2], Phaser.Physics.ARCADE);
-        tank.body.collideWorldBounds = true;
-        tank.body.enable = true;
-        tank.physicsBodyType = Phaser.Physics.ARCADE;
+        game.physics.arcade.enable(tanks, Phaser.Physics.ARCADE);
+        tanks.collideWorldBounds = true;
+        tanks.enable = true;
+        tanks.physicsBodyType = Phaser.Physics.ARCADE;
 
 
-        tank2.body.enable = true;
-        tank2.physicsBodyType = Phaser.Physics.ARCADE;
-        tank2.body.collideWorldBounds = true;
-        tank2.body.bounce.y = 0.95;
+        //tank2.body.enable = true;
+        //tank2.physicsBodyType = Phaser.Physics.ARCADE;
+        //tank2.body.collideWorldBounds = true;
+        //tank2.body.bounce.y = 0.95;
 
         upKey = game.input.keyboard.addKey(Phaser.Keyboard.UP);
         downKey = game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
@@ -67,10 +70,10 @@ function initApp() {
 
     function update() {
 
-        game.physics.arcade.collide(tank, tank2);
+        game.physics.arcade.collide(tank, tanks);
 
 
-        game.physics.arcade.overlap(projectails, tank2, killTank);
+        game.physics.arcade.overlap(projectails, tanks, killTank);
         tank.speed = 0;
 
         if (spaceKey.isDown) {
