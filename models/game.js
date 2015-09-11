@@ -17,7 +17,7 @@ var Game = {
                             tankModel.setTankData(tanksSessions[session], sessions[session]);
                         }
                     }
-                    else if (typeof tanksSessions[session] != "undefined") {
+                    else if (typeof tanksSessions[session] != "undefined" && tanksSessions[session]) {
                         tanksSessions[session].kill();
                         tanksSessions[session] = null;
                     }
