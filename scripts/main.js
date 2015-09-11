@@ -47,7 +47,8 @@ function initApp() {
         map = game.add.tilemap('map', 64, 64);
         map.addTilesetImage('tiles');
 
-        map.setCollisionBetween(0, 100);
+        map.setCollisionBetween(0, 66);
+        map.setCollisionBetween(68, 200);
         map.setCollision(16);
         //map.setTileIndexCallback(16, function(){console.log('fsda')})
         layer = map.createLayer(0);
@@ -166,9 +167,10 @@ function initApp() {
     }
 
     function destroyWall (projectile, layer) {
-        projectile.kill();
-        tankModel.killProjectail(projectile);
-        removeTile(layer);
+        if (layer.index != 67){
+            projectile.kill();
+            removeTile(layer);
+        }
         
         //console.log(layer);
     }
