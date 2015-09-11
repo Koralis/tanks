@@ -55,13 +55,6 @@ function initApp() {
         tank = tankModel.createTank(sessionId, null);
         tankModel.sendData();
 
-        game.physics.arcade.enable(tanks, Phaser.Physics.ARCADE);
-        tanks.collideWorldBounds = true;
-        tanks.enable = true;
-        tanks.physicsBodyType = Phaser.Physics.ARCADE;
-
-
-
         upKey = game.input.keyboard.addKey(Phaser.Keyboard.UP);
         downKey = game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
         leftKey = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
@@ -77,10 +70,17 @@ function initApp() {
         if (killed)
             return false;
 
+        // Collides
         game.physics.arcade.collide(tank, tanks);
         game.physics.arcade.collide(tanks, layer);
         game.physics.arcade.collide(projectails, layer, destroyWall);
+        game.physics.arcade.collide(projectails, game.world, destroyWall);
+        //
+
+        // Overlaps
         game.physics.arcade.overlap(projectails, tanks, killTank);
+        //
+
         tank.speed = 0;
 
         if (spaceKey.isDown) {
@@ -134,7 +134,7 @@ function initApp() {
             projectail.angle = tank.angle;
             game.physics.arcade.enable(projectail, Phaser.Physics.ARCADE);
 
-            projectail.body.collideWorldBounds = true;
+            projectail.body.collideWorldBounds = false;
             projectail.body.enable = true;
             projectail.physicsBodyType = Phaser.Physics.ARCADE;
 
@@ -166,17 +166,12 @@ function initApp() {
 
     function destroyWall (projectile, layer) {
         projectile.kill();
-        //removeTile(layer);
+        removeTile(layer);
         
-        console.log(layer);
+        //console.log(layer);
     }
 
     function removeTile(tile){
-        tile.destroy();
-        ////tile.collideDown = false;
-        ////tile.collideUp = false;
-        ////tile.collideRight = false;
-        ////tile.collideLeft = false;
-        //layer.dirty = true;
+        map.removeTile(tile.x, tile.y);
     };
 }
