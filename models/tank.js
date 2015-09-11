@@ -1,6 +1,6 @@
 var tankModel = {
     sendData: function () {
-        if (!tank)
+        if (!tank || killed)
             return false;
         var timestamp = new Date();
 
@@ -33,6 +33,8 @@ var tankModel = {
     },
 
     setTankData: function(newTank, params) {
+        if (!newTank)
+            return false;
         if (params) {
             newTank.x = params.x;
             newTank.y = params.y;
