@@ -130,6 +130,7 @@ function initApp() {
             projectail.speed = 200;
             projectail.angle = tank.angle;
             projectail.scale.setTo(5, 5);
+            projectail.anchor.setTo(0.5);
             game.physics.arcade.enable(projectail, Phaser.Physics.ARCADE);
 
             projectail.body.collideWorldBounds = false;
