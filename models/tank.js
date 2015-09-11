@@ -4,13 +4,10 @@ var tankModel = {
             return false;
         var timestamp = new Date();
 
-        userSession.set({
-            "x": tank.x,
-            "y": tank.y,
-            "angle": tank.angle,
-            time: timestamp.getTime() / 1000
-            //killed: killed
-        });
+        userSession.child("x").set(tank.x);
+        userSession.child("y").set(tank.y);
+        userSession.child("angle").set(tank.angle);
+        userSession.child("time").set(timestamp.getTime() / 1000);
     },
 
     createTank: function(session, params) {
