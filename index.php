@@ -7,31 +7,46 @@
     <script type="text/javascript" src="models/session.js"></script>
     <script type="text/javascript" src="models/tank.js"></script>
     <script type="text/javascript" src="scripts/main.js"></script>
+    <style type="text/css">
+        * {
+            margin: 0;
+        }
+        body {
+            background: #000;
+            position: relative;
+        }
+        #gameWrapper {
+            width: 1024px;
+            height: 768px;
+            margin: 0 auto;
+        }
+    </style>
 </head>
 <body>
-<script type="text/javascript">
+    <div id="gameWrapper"></div>
+    <script type="text/javascript">
 
-    var firebase = new Firebase("https://koralis-tanks2.firebaseio.com/"),
-        sessionId = Session.getId(),
-        userSession = firebase.child('sessions/' + sessionId),
-        sessionData,
-        game,
-        tank,
-        tanksSessions = {},
-        tanks,
-        killed = false;
+        var firebase = new Firebase("https://koralis-tanks2.firebaseio.com/"),
+            sessionId = Session.getId(),
+            userSession = firebase.child('sessions/' + sessionId),
+            sessionData,
+            game,
+            tank,
+            tanksSessions = {},
+            tanks,
+            killed = false;
 
-    window.onload = function() {
-        initApp();
+        window.onload = function () {
+            initApp();
 
-        firebase.child('sessions').on('value', function(snapshot) {
-            sessionData = snapshot.val();
+            firebase.child('sessions').on('value', function (snapshot) {
+                sessionData = snapshot.val();
 
-            Game.updateView(sessionData);
-        });
-    };
+                Game.updateView(sessionData);
+            });
+        };
 
-</script>
+    </script>
 </body>
 </html>
 

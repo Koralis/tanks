@@ -6,7 +6,7 @@ function initApp() {
     var spaceKey;
     var projectails;
 
-    game = new Phaser.Game(1024, 768, Phaser.AUTO, '', {
+    game = new Phaser.Game(1024, 768, Phaser.AUTO, 'gameWrapper', {
         preload: preload,
         create: create,
         update: update,
@@ -82,7 +82,6 @@ function initApp() {
     function create() {
 
         fx = game.add.audioSprite('sfx');
-        console.debug(fx);
         fx.allowMultiple = true;
 
         game.physics.startSystem(Phaser.Physics.ARCADE);
