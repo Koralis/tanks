@@ -5,6 +5,8 @@ function initApp() {
     var rightKey;
     var spaceKey;
     var projectails;
+    var explosion;
+    var shot;
 
     game = new Phaser.Game(1024, 768, Phaser.AUTO, 'gameWrapper', {
         preload: preload,
@@ -13,64 +15,13 @@ function initApp() {
         render: render
     });
 
-    var audioJSON = {
-        spritemap: {
-            'alien death': {
-                start: 1,
-                end: 2,
-                loop: false
-            },
-            'boss hit': {
-                start: 3,
-                end: 3.5,
-                loop: false
-            },
-            'escape': {
-                start: 4,
-                end: 7.2,
-                loop: false
-            },
-            'meow': {
-                start: 8,
-                end: 8.5,
-                loop: false
-            },
-            'numkey': {
-                start: 9,
-                end: 9.1,
-                loop: false
-            },
-            'ping': {
-                start: 10,
-                end: 11,
-                loop: false
-            },
-            'death': {
-                start: 12,
-                end: 16.2,
-                loop: false
-            },
-            'shot': {
-                start: 17,
-                end: 18,
-                loop: false
-            },
-            'squit': {
-                start: 19,
-                end: 19.3,
-                loop: false
-            }
-        }
-    };
-
-    var fx;
-
     function preload() {
 
 //            game.load.image('logo', 'images/logo.png');
         game.load.image('tank', 'images/tank.png');
         game.load.image('projectail', 'images/projectile.gif');
-        game.load.audiosprite('sfx', 'images/fx_mixdown.ogg', null, audioJSON);
+        game.load.audio('explosion', 'images/sentry_explode.wav');
+        game.load.audio('shot', 'images/shot1.wav');
         game.stage.backgroundColor = '#000';
 
 
@@ -81,8 +32,8 @@ function initApp() {
 
     function create() {
 
-        fx = game.add.audioSprite('sfx');
-        fx.allowMultiple = true;
+        explosion = game.add.audio('explosion');
+        shot = game.add.audio('shot');
 
         game.physics.startSystem(Phaser.Physics.ARCADE);
         game.physics.startSystem(Phaser.Physics.P2JS);
@@ -171,7 +122,7 @@ function initApp() {
 
     function shoot(tank) {
         if (tank && tank.can_shoot) {
-            fx.play('shot');
+            shot.play();
             var positions = [];
             positions [0] = [33, 0];
             positions [90] = [0, -33];
@@ -200,7 +151,7 @@ function initApp() {
     }
 
     function killTank(projectile, tank) {
-        fx.play('death');
+        explosion.play();
         projectile.kill();
         tank.kill();
         tankModel.killTankSession(tank.session);
