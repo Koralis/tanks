@@ -129,7 +129,6 @@ function initApp() {
             var projectail = projectails.create(tank.x, tank.y, 'projectail');
             projectail.speed = 200;
             projectail.angle = tank.angle;
-            projectail.scale.setTo(5, 5);
             projectail.anchor.setTo(0.5);
             game.physics.arcade.enable(projectail, Phaser.Physics.ARCADE);
 
@@ -160,7 +159,7 @@ function initApp() {
 
         setTimeout(function () {
             tank.can_shoot = true;
-        }, 100);
+        }, 500);
     }
 
     function destroyWall (projectile, layer) {
