@@ -125,13 +125,8 @@ function initApp() {
     function shoot(tank) {
         if (tank && tank.can_shoot) {
             shot.play();
-            var positions = [];
-            positions [0] = [33, 0];
-            positions [90] = [0, -33];
-            positions [-90] = [0, 33];
-            positions [-180] = [-33, 0];
 
-            var projectail = projectails.create(tank.x + positions[tank.angle][0], tank.y - positions[tank.angle][1], 'projectail');
+            var projectail = projectails.create(tank.x, tank.y, 'projectail');
             projectail.speed = 200;
             projectail.angle = tank.angle;
             game.physics.arcade.enable(projectail, Phaser.Physics.ARCADE);
