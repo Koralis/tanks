@@ -9,18 +9,54 @@
 
     window.onload = function() {
 
-        var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create });
+        var upKey;
+        var downKey;
+        var leftKey;
+        var rightKey;
+
+        var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
 
         function preload () {
 
-            game.load.image('logo', 'images/logo.png');
+//            game.load.image('logo', 'images/logo.png');
+            game.load.image('tank', 'images/tank.png')
 
         }
 
         function create () {
 
-            var logo = game.add.sprite(game.world.centerX, game.world.centerY, 'logo');
-            logo.anchor.setTo(0.5, 0.5);
+            tank = game.add.sprite(game.world.centerX, game.world.centerY, 'tank');
+            tank.anchor.setTo(0.5, 0.5);
+
+            upKey = game.input.keyboard.addKey(Phaser.Keyboard.UP);
+            downKey = game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
+            leftKey = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
+            rightKey = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
+        }
+
+        function update () {
+
+            if (upKey.isDown)
+            {
+                tank.y--;
+                tank.angle = 270;
+            }
+            else if (downKey.isDown)
+            {
+                tank.y++;
+                tank.angle = 90;
+            }
+
+            else if (leftKey.isDown)
+            {
+                tank.x--;
+                tank.angle = 180;
+            }
+            else if (rightKey.isDown)
+            {
+                tank.x++;
+                tank.angle = 0;
+            }
 
         }
 
