@@ -1,6 +1,6 @@
 var Game = {
     updateView: function(sessions) {
-        var timestamp = new Date()
+        var timestamp = new Date(),
             expired = timestamp.getTime() / 1000 - 30,
             killed = true;
 
@@ -21,6 +21,13 @@ var Game = {
                 }
             }
         }
+        //removed lost sessions
+        for (var oldSession in tanksSessions) {
+            if (!sessions.hasOwnProperty(oldSession)) {
+                tanksSessions[oldSession].kill();
+            }
+        }
+
         if (killed) {
             tank.kill();
         }
