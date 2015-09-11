@@ -1,7 +1,8 @@
 var Game = {
     updateView: function(sessions) {
         var timestamp = new Date()
-            expired = timestamp.getTime() / 1000 - 30;
+            expired = timestamp.getTime() / 1000 - 30,
+            killed = true;
 
         for (var session in sessions) {
             if (sessions.hasOwnProperty(session)) {
@@ -15,7 +16,13 @@ var Game = {
                         tankModel.setTankData(tanksSessions[session], sessions[session]);
                     }
                 }
+                else {
+                    killed = false;
+                }
             }
+        }
+        if (killed) {
+            tank.kill();
         }
     }
 };
