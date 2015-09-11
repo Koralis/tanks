@@ -5,7 +5,6 @@ function initApp() {
     var rightKey;
     var spaceKey;
     var projectails;
-    var tanks;
 
     game = new Phaser.Game(1024, 768, Phaser.AUTO, '', {
         preload: preload,

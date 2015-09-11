@@ -17,7 +17,8 @@
         sessionData,
         game,
         tank,
-        tanks = {};
+        tanksSessions = {},
+        tanks;
 
     window.onload = function() {
         initApp();

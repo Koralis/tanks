@@ -7,12 +7,12 @@ var Game = {
             if (sessions.hasOwnProperty(session)) {
                 if (session != sessionId) {
                     //create tank
-                    if (typeof tanks[session] == "undefined") {
+                    if (typeof tanksSessions[session] == "undefined") {
                         tankModel.createTank(session, sessions[session]);
                     }
                     //update tank data
                     else {
-                        tankModel.setTankData(tanks[session], sessions[session]);
+                        tankModel.setTankData(tanksSessions[session], sessions[session]);
                     }
                 }
             }

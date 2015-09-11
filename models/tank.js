@@ -11,7 +11,7 @@ var tankModel = {
     },
 
     createTank: function(session, params) {
-        var newTank = game.add.sprite(game.world.centerX, game.world.centerY - 150, 'tank', 2);
+        var newTank = tanks.create(game.world.centerX, game.world.centerY - 150, 'tank', 2);
         game.physics.arcade.enable([newTank], Phaser.Physics.ARCADE);
 
         newTank.anchor.setTo(0.5, 0.5);
@@ -23,9 +23,9 @@ var tankModel = {
         newTank.body.collideWorldBounds = true;
         newTank.body.bounce.y = 0.95;
 
-        tanks[session] = newTank;
+        tanksSessions[session] = newTank;
 
-        this.setTankData(tanks[session], params);
+        this.setTankData(tanksSessions[session], params);
     },
 
     setTankData: function(tank, params) {
