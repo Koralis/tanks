@@ -63,6 +63,9 @@ function initApp() {
 
     function update() {
 
+        if (!tank)
+            return false;
+
         game.physics.arcade.collide(tank, tanks);
 
 
@@ -107,7 +110,7 @@ function initApp() {
     }
 
     function shoot(tank) {
-        if (tank.can_shoot) {
+        if (tank && tank.can_shoot) {
             console.log(tank.angle);
             var positions = [];
             positions [0] = [100, 0];
