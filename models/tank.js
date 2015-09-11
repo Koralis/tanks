@@ -58,6 +58,6 @@ var tankModel = {
     },
 
     killTankSession: function(session) {
-        firebase.child('sessions/' + session).remove();
+        firebase.child('sessions/' + session + '/killed').set(true);
     }
 };

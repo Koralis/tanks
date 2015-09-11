@@ -7,20 +7,26 @@ var Game = {
         for (var session in sessions) {
             if (sessions.hasOwnProperty(session)) {
                 if (session != sessionId) {
-                    //create tank
-                    if (typeof tanksSessions[session] == "undefined") {
-                        tankModel.createTank(session, sessions[session]);
+                    if (!sessions[session].killed) {
+                        //create tank
+                        if (typeof tanksSessions[session] == "undefined") {
+                            tankModel.createTank(session, sessions[session]);
+                        }
+                        //update tank data
+                        else {
+                            tankModel.setTankData(tanksSessions[session], sessions[session]);
+                        }
                     }
-                    //update tank data
-                    else {
-                        tankModel.setTankData(tanksSessions[session], sessions[session]);
+                    else if (typeof tanksSessions[session] != "undefined") {
+                        tanksSessions[session].kill();
+                        tanksSessions[session] = null;
                     }
                 }
                 else {
                     if (!sessions[session].killed)
                         tankKilled = false;
                     else {
-
+                        killed = true;
                     }
                 }
             }
@@ -28,6 +34,7 @@ var Game = {
         //removed lost sessions
         for (var oldSession in tanksSessions) {
             if (!sessions.hasOwnProperty(oldSession)) {
+                tanksSessions[oldSession].kill();
                 tanksSessions[oldSession] = null;
                 delete tanksSessions[oldSession];
             }

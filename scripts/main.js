@@ -111,7 +111,6 @@ function initApp() {
 
     function shoot(tank) {
         if (tank && tank.can_shoot) {
-            console.log(tank.angle);
             var positions = [];
             positions [0] = [100, 0];
             positions [90] = [0, -100];
