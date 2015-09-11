@@ -19,10 +19,12 @@
             width: 1024px;
             height: 768px;
             margin: 0 auto;
+            border: 5px solid #fff;
         }
     </style>
 </head>
 <body>
+<br />
     <div id="gameWrapper"></div>
     <script type="text/javascript">
 
