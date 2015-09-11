@@ -95,9 +95,12 @@ function initApp() {
 
         map = game.add.tilemap('map', 64, 64);
         map.addTilesetImage('tiles');
+
+        map.setCollisionBetween(0, 100);
+        map.setCollision(16);
+        //map.setTileIndexCallback(16, function(){console.log('fsda')})
         layer = map.createLayer(0);
-//            layer.resizeWorld();
-        map.setTileIndexCallback(16, function(){console.log('fsda')})
+        layer.resizeWorld();
 
         tank = tankModel.createTank(sessionId, null);
         tankModel.sendData();
@@ -125,8 +128,8 @@ function initApp() {
             return false;
 
         game.physics.arcade.collide(tank, tanks);
-
-
+        game.physics.arcade.collide(tanks, layer);
+        game.physics.arcade.collide(projectails, layer, destroyWall);
         game.physics.arcade.overlap(projectails, tanks, killTank);
         tank.speed = 0;
 
@@ -171,10 +174,10 @@ function initApp() {
         if (tank && tank.can_shoot) {
             fx.play('shot');
             var positions = [];
-            positions [0] = [100, 0];
-            positions [90] = [0, -100];
-            positions [-90] = [0, 100];
-            positions [-180] = [-100, 0];
+            positions [0] = [33, 0];
+            positions [90] = [0, -33];
+            positions [-90] = [0, 33];
+            positions [-180] = [-33, 0];
 
             var projectail = projectails.create(tank.x + positions[tank.angle][0], tank.y - positions[tank.angle][1], 'projectail');
             projectail.speed = 200;
@@ -210,4 +213,20 @@ function initApp() {
             tank.can_shoot = true;
         }, 100);
     }
+
+    function destroyWall (projectile, layer) {
+        projectile.kill();
+        //removeTile(layer);
+        
+        console.log(layer);
+    }
+
+    function removeTile(tile){
+        tile.destroy();
+        ////tile.collideDown = false;
+        ////tile.collideUp = false;
+        ////tile.collideRight = false;
+        ////tile.collideLeft = false;
+        //layer.dirty = true;
+    };
 }
