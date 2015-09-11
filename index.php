@@ -47,7 +47,6 @@
                 Game.updateView(sessionData);
             });
         };
-        console.log(sessionId);
 
     </script>
 </body>

@@ -138,6 +138,8 @@ function initApp() {
 
             tank.can_shoot = false;
 
+            tankModel.storeProjectail(projectail);
+
 
             shootTimeout();
         }
@@ -151,6 +153,7 @@ function initApp() {
     function killTank(projectile, tank) {
         explosion.play();
         projectile.kill();
+        tankModel.killProjectail(projectile);
         tank.kill();
         tankModel.killTankSession(tank.session);
     }
@@ -164,6 +167,7 @@ function initApp() {
 
     function destroyWall (projectile, layer) {
         projectile.kill();
+        tankModel.killProjectail(projectile);
         removeTile(layer);
         
         //console.log(layer);
